@@ -72,8 +72,9 @@ make.consensus.seqs <- function(input.folder, forward.suffix, reverse.suffix, mi
                                )
 
     # make the set of consensus sequences
-    consensus.seqs = lapply(consensi, function(x) x$consensus)
-    # Some are null, becuase reads can be removed for e.g. stop codons
+    consensus.seqs = lapply(consensi, function(x) DNAString(x$consensus))
+        # DNAString because DNAStringSet do not work with character sequences
+    # Some are null, because reads can be removed for e.g. stop codons
     consensus.seqs = Filter(Negate(is.null), consensus.seqs)
     consensus.set  = DNAStringSet(consensus.seqs)
 
